@@ -1,4 +1,4 @@
-package OldVersions;
+package org.usfirst.frc.team1787.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -24,6 +24,8 @@ public class DriveTrain {
 	private SpeedControllerGroup rightMotors;
 	
 	private DifferentialDrive myDrive;
+	
+	private static final DriveTrain instance = new DriveTrain();
 
 	public DriveTrain() {
 		frontLeftMotor.setInverted(true);
@@ -35,8 +37,17 @@ public class DriveTrain {
 		//myDrive = new DifferentialDrive(leftMotors, rightMotors);
 	}
 	
-	  @SuppressWarnings("ParameterName")
-	  public void arcadeDrive(double xSpeed, double zRotation) {
+	public static DriveTrain getInstance() {
+	    return instance;
+	  }
+	
+	public void arcadeDrive(double motorSpeed) {
+		
+		arcadeDrive(motorSpeed, 0);
+	}
+	
+	@SuppressWarnings("ParameterName")
+	public void arcadeDrive(double xSpeed, double zRotation) {
 
 	    double leftMotorOutput;
 	    double rightMotorOutput;
@@ -71,29 +82,5 @@ public class DriveTrain {
 	    System.out.println("Right: " + rightMotorOutput);
 	  }
 	  
-	  public void simpleAutonomous (double timeToRun) {
-		  
-		  if (autoRunTime < timeToRun) {
-			  frontLeftMotor.set(autoMotorSpeed);
-			  frontRightMotor.set(autoMotorSpeed);
-			  backLeftMotor.set(autoMotorSpeed);
-			  backRightMotor.set(autoMotorSpeed);
-			  autoRunTime = autoRunTime + 0.02;
-			  System.out.println("Driving");
-		  }
-		  
-		  else {
-			  autoMotorSpeed = 0;
-			  frontLeftMotor.set(autoMotorSpeed);
-			  frontRightMotor.set(autoMotorSpeed);
-			  backLeftMotor.set(autoMotorSpeed);
-			  backRightMotor.set(autoMotorSpeed);
-			  System.out.println("Stopped");
-		  }
-	  }
-	  
-	  public void resetVariables () {
-		  autoRunTime = 0;
-	  }
 
 }
