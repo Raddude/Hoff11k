@@ -31,8 +31,8 @@ public class Robot extends TimedRobot {
 	private Joystick leftStick = new Joystick(LEFT_JOYSTICK_ID);
 	
 	//Input options
-	private int FLYWHEEL_ACTIVATE_BUTTON; //define later
-	private int FEEDER_ACTIVATE_BUTTON; //define later
+	private int FLYWHEEL_ACTIVATE_BUTTON = 1; 
+	private int FEEDER_ACTIVATE_BUTTON = 1; 
 	
 	
 	

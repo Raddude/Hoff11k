@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.hal.FRCNetComm.tInstances;
 import edu.wpi.first.wpilibj.hal.FRCNetComm.tResourceType;
 
 public class DriveTrain {
-	
+	//Important talon values with more intuitive names
 	private final int FRONT_RIGHT_TALON_ID = 8;
 	private final int REAR_RIGHT_TALON_ID = 9;
 	private final int FRONT_LEFT_TALON_ID = 6;
@@ -20,6 +20,8 @@ public class DriveTrain {
 	private WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(FRONT_RIGHT_TALON_ID);
 	private WPI_TalonSRX backRightMotor = new WPI_TalonSRX(REAR_RIGHT_TALON_ID);
 	
+	//Speed controller groups, because arcadeDrive can only take in halves of the robot at a time to make
+	//each side go in the same direction.
 	private SpeedControllerGroup leftMotors;
 	private SpeedControllerGroup rightMotors;
 	

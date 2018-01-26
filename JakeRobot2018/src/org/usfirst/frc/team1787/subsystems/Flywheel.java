@@ -13,6 +13,7 @@ public class Flywheel {
 	
 	private static final Flywheel instance = new Flywheel();
 	
+	//Setting up IDs with more intuitive names
 	private final int TURRET_FLYWHEEL_TALON_ID = 5;
 	private final int FLYWHEEL_ENCODER_A_CHANNEL = 6;
 	private final int FLYWHEEL_ENCODER_B_CHANNEL = 7;
