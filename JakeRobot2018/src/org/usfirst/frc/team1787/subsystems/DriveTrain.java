@@ -20,9 +20,6 @@ public class DriveTrain {
 	private WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(FRONT_RIGHT_TALON_ID);
 	private WPI_TalonSRX backRightMotor = new WPI_TalonSRX(REAR_RIGHT_TALON_ID);
 	
-	private double autoRunTime = 0;
-	private double autoMotorSpeed = 0.25;
-	
 	private SpeedControllerGroup leftMotors;
 	private SpeedControllerGroup rightMotors;
 	
