@@ -28,13 +28,11 @@ public class DriveTrain {
 	private static final DriveTrain instance = new DriveTrain();
 
 	public DriveTrain() {
+		//Inverting all of the talons so that they all light up green when the robot goes forward 
 		frontLeftMotor.setInverted(true);
 		backLeftMotor.setInverted(true);
 		frontRightMotor.setInverted(false);
 		backRightMotor.setInverted(false);
-		//leftMotors = new SpeedControllerGroup(frontLeftMotor, backLeftMotor);
-		//rightMotors = new SpeedControllerGroup(frontRightMotor, backRightMotor);
-		//myDrive = new DifferentialDrive(leftMotors, rightMotors);
 	}
 	
 	public static DriveTrain getInstance() {
@@ -42,13 +40,13 @@ public class DriveTrain {
 	  }
 	
 	public void arcadeDrive(double motorSpeed) {
-		
+		//A function for Autonomous to just give a motor speed and have the robot move
 		arcadeDrive(motorSpeed, 0);
 	}
 	
 	@SuppressWarnings("ParameterName")
 	public void arcadeDrive(double xSpeed, double zRotation) {
-
+		//Basic drive class, makes the robot move forwards or backwards with a rotation
 	    double leftMotorOutput;
 	    double rightMotorOutput;
 
@@ -66,11 +64,11 @@ public class DriveTrain {
 	    } else {
 	      // Third quadrant, else fourth quadrant
 	      if (zRotation >= 0.0) {
-	        leftMotorOutput = xSpeed + zRotation;
-	        rightMotorOutput = maxInput;
-	      } else {
 	        leftMotorOutput = maxInput;
-	        rightMotorOutput = xSpeed - zRotation;
+	        rightMotorOutput = xSpeed + zRotation;
+	      } else {
+	        leftMotorOutput = xSpeed - zRotation;
+	        rightMotorOutput = maxInput;
 	      }
 	    }
 	    
