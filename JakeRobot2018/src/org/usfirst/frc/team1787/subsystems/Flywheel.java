@@ -28,7 +28,6 @@ public class Flywheel {
 	private double FLYWHEEL_KI = 0;
 	private double FLYWHEEL_KD = 0;
 	private double FLYWHEEL_KF = 0;
-	private double FLYWHEEL_TARGET_SPEED = .5;
 	private double FLYWHEEL_ENCODER_REVOLUTIONS_PER_PULSE = 1.0/2048;
 	private double PID_ERROR_TOLERANCE = 0;
 	
@@ -61,6 +60,7 @@ public class Flywheel {
 	public void sendShuffleboadData() {
 		SmartDashboard.putData("Flywheel PID Controller", flywheelController);
 		SmartDashboard.putData("Flywheel Encoder", flywheelEncoder);
+		SmartDashboard.putNumber("Flywheel Encoder Ticks", flywheelEncoder.getRate());
 	}
 	
 	public static Flywheel getInstance() {
