@@ -27,7 +27,7 @@ public class Flywheel {
 	private double FLYWHEEL_KP = 0;
 	private double FLYWHEEL_KI = 0;
 	private double FLYWHEEL_KD = 0;
-	private double FLYWHEEL_KF = 0;
+	private double FLYWHEEL_KF = 1.0/80.0;
 	private double FLYWHEEL_ENCODER_REVOLUTIONS_PER_PULSE = 1.0/2048;
 	private double PID_ERROR_TOLERANCE = 0;
 	
@@ -39,7 +39,9 @@ public class Flywheel {
 		flywheelEncoder.setDistancePerPulse(FLYWHEEL_ENCODER_REVOLUTIONS_PER_PULSE);
 	    flywheelEncoder.setPIDSourceType(PIDSourceType.kRate);
 	    flywheelController.setAbsoluteTolerance(PID_ERROR_TOLERANCE);
-		
+	    
+		flywheelMotor.configVoltageCompSaturation(12, 10);
+		flywheelMotor.enableVoltageCompensation(true);
 	}
 	
 	public void runFlywheelVoltage() {
@@ -60,7 +62,9 @@ public class Flywheel {
 	public void sendShuffleboadData() {
 		SmartDashboard.putData("Flywheel PID Controller", flywheelController);
 		SmartDashboard.putData("Flywheel Encoder", flywheelEncoder);
-		SmartDashboard.putNumber("Flywheel Encoder Ticks", flywheelEncoder.getRate());
+		SmartDashboard.putNumber("Flywheel Encoder Ticks", flywheelEncoder.getRaw());
+		SmartDashboard.putNumber("Flywheel Error", flywheelController.getError());
+		SmartDashboard.putBoolean("Flywheel Correctness", flywheelController.onTarget());
 	}
 	
 	public static Flywheel getInstance() {
