@@ -67,11 +67,13 @@ public class Robot extends TimedRobot {
 		slewingRing.turnTurret(2*leftStick.getRawAxis(JOYSTICK_ROTATION_AXIS));
 		
 		if (leftStick.getRawButtonPressed(FLYWHEEL_ACTIVATE_BUTTON)) {
-			flywheel.runFlywheelVoltage();
+			flywheel.runFlywheelPID();
 		}
 		else if (leftStick.getRawButtonReleased(FLYWHEEL_ACTIVATE_BUTTON)) {
 			flywheel.stopFlywheel();
 		}
+		
+		flywheel.sendShuffleboadData();
 		
 		
 		
