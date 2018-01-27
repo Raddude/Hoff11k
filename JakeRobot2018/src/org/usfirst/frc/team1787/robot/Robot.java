@@ -32,6 +32,7 @@ public class Robot extends TimedRobot {
 	private Joystick rightStick = new Joystick(RIGHT_JOYSTICK_ID);
 	private Joystick leftStick = new Joystick(LEFT_JOYSTICK_ID);
 	private int JOYSTICK_ROTATION_AXIS = 2;
+	private int JOYSTICK_SLIDER_AXIS = 3;
 	
 	//Input options
 	private int FLYWHEEL_ACTIVATE_BUTTON = 1; 
@@ -67,7 +68,7 @@ public class Robot extends TimedRobot {
 		slewingRing.turnTurret(SLEWING_RING_SPEED_COEFFICIENT*leftStick.getRawAxis(JOYSTICK_ROTATION_AXIS));
 		
 		if (leftStick.getRawButtonPressed(FLYWHEEL_ACTIVATE_BUTTON)) {
-			flywheel.runFlywheelPID();
+			flywheel.runFlywheelPID(leftStick.getRawAxis(-JOYSTICK_SLIDER_AXIS));
 		}
 		else if (leftStick.getRawButtonReleased(FLYWHEEL_ACTIVATE_BUTTON)) {
 			flywheel.stopFlywheel();

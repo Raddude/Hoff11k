@@ -53,7 +53,19 @@ public class DriveTrain {
 	    double rightMotorOutput;
 
 	    double maxInput = Math.copySign(Math.max(Math.abs(xSpeed), Math.abs(zRotation)), xSpeed);
-
+	    
+	    //This gets the joystick being put to a side to work correctly
+	    if (xSpeed <= 0.1 && xSpeed >= -0.1) {
+	    	if (zRotation >= 0) {
+	    		leftMotorOutput = maxInput;
+	    		rightMotorOutput = -maxInput;
+	    	}
+	    	else {
+	    		leftMotorOutput = -maxInput;
+	    		rightMotorOutput = maxInput;
+	    	}
+	    }
+	    
 	    if (xSpeed >= 0.0) {
 	      // First quadrant, else second quadrant
 	      if (zRotation >= 0.0) {

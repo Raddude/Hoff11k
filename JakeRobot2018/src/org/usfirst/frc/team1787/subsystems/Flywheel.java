@@ -17,7 +17,7 @@ public class Flywheel {
 	private final int FLYWHEEL_ENCODER_A_CHANNEL = 6;
 	private final int FLYWHEEL_ENCODER_B_CHANNEL = 7;
 	
-	private final double FLYWHEEL_VOLTAGE_SPEED_VALUE = 0.6;
+	private final double FLYWHEEL_VOLTAGE_SPEED_VALUE = 0.99;
 	
 	
 	private WPI_TalonSRX flywheelMotor = new WPI_TalonSRX(TURRET_FLYWHEEL_TALON_ID);
@@ -28,11 +28,18 @@ public class Flywheel {
 	private double FLYWHEEL_KI = 0;
 	private double FLYWHEEL_KD = 0;
 	private double FLYWHEEL_KF = 0;
-	private double FLYWHEEL_TARGET_SPEED = 5;
+	private double FLYWHEEL_TARGET_SPEED = .5;
+	private double FLYWHEEL_ENCODER_REVOLUTIONS_PER_PULSE = 1.0/2048;
+	private double PID_ERROR_TOLERANCE = 0;
 	
 	private PIDController flywheelController = new PIDController(FLYWHEEL_KP, FLYWHEEL_KI, FLYWHEEL_KD, FLYWHEEL_KF, flywheelEncoder, flywheelMotor, PIDController.kDefaultPeriod);
 	
 	public Flywheel() {
+		
+		flywheelEncoder.setReverseDirection(true);
+		flywheelEncoder.setDistancePerPulse(FLYWHEEL_ENCODER_REVOLUTIONS_PER_PULSE);
+	    flywheelEncoder.setPIDSourceType(PIDSourceType.kRate);
+	    flywheelController.setAbsoluteTolerance(PID_ERROR_TOLERANCE);
 		
 	}
 	
@@ -40,13 +47,15 @@ public class Flywheel {
 		flywheelMotor.set(FLYWHEEL_VOLTAGE_SPEED_VALUE);
 	}
 	
-	public void runFlywheelPID() {
-		flywheelController.setSetpoint(FLYWHEEL_TARGET_SPEED);
+	public void runFlywheelPID(double SETPOINT_INPUT) {
 		flywheelController.enable();
+		flywheelController.setSetpoint(SETPOINT_INPUT);
 	}
 	
 	public void stopFlywheel() {
 		flywheelController.reset();
+		flywheelEncoder.reset();
+		
 	}
 	
 	public void sendShuffleboadData() {
@@ -58,7 +67,9 @@ public class Flywheel {
 		return instance;
 	}
 	
-	
+	public PIDController getPIDController() {
+		return flywheelController;
+	}
 	
 	
 
