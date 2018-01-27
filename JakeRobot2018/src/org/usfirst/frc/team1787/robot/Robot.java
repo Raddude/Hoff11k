@@ -9,6 +9,7 @@ package org.usfirst.frc.team1787.robot;
 
 import org.usfirst.frc.team1787.subsystems.DriveTrain;
 import org.usfirst.frc.team1787.subsystems.Flywheel;
+import org.usfirst.frc.team1787.subsystems.SlewingRing;
 import org.usfirst.frc.team1787.subsystems.Autonomous;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -24,11 +25,13 @@ public class Robot extends TimedRobot {
 	private DriveTrain driveTrain = DriveTrain.getInstance();
 	private Autonomous autonomous = Autonomous.getInstance();
 	private Flywheel flywheel = Flywheel.getInstance();
+	private SlewingRing slewingRing = SlewingRing.getInstance();
 	
 	private final int RIGHT_JOYSTICK_ID = 0;
 	private final int LEFT_JOYSTICK_ID = 1;
 	private Joystick rightStick = new Joystick(RIGHT_JOYSTICK_ID);
 	private Joystick leftStick = new Joystick(LEFT_JOYSTICK_ID);
+	private int JOYSTICK_ROTATION_AXIS = 2;
 	
 	//Input options
 	private int FLYWHEEL_ACTIVATE_BUTTON = 1; 
@@ -61,10 +64,16 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		driveTrain.arcadeDrive(-rightStick.getY(), rightStick.getX());
+		slewingRing.turnTurret(2*leftStick.getRawAxis(JOYSTICK_ROTATION_AXIS));
 		
 		if (leftStick.getRawButtonPressed(FLYWHEEL_ACTIVATE_BUTTON)) {
 			flywheel.runFlywheelVoltage();
 		}
+		else if (leftStick.getRawButtonReleased(FLYWHEEL_ACTIVATE_BUTTON)) {
+			flywheel.stopFlywheel();
+		}
+		
+		
 		
 		
 	}

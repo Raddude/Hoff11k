@@ -18,7 +18,7 @@ public class Flywheel {
 	private final int FLYWHEEL_ENCODER_A_CHANNEL = 6;
 	private final int FLYWHEEL_ENCODER_B_CHANNEL = 7;
 	
-	private final double FLYWHEEL_VOLTAGE_SPEED_VALUE = 0.5;
+	private final double FLYWHEEL_VOLTAGE_SPEED_VALUE = 0.6;
 	
 	
 	private WPI_TalonSRX flywheelMotor = new WPI_TalonSRX(TURRET_FLYWHEEL_TALON_ID);
@@ -29,6 +29,10 @@ public class Flywheel {
 	
 	public void runFlywheelVoltage() {
 		flywheelMotor.set(FLYWHEEL_VOLTAGE_SPEED_VALUE);
+	}
+	
+	public void stopFlywheel() {
+		flywheelMotor.set(0);
 	}
 	
 	public static Flywheel getInstance() {
