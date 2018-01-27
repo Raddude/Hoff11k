@@ -16,7 +16,7 @@ public class Autonomous {
 	private static final Autonomous instance = new Autonomous();
 	private DriveTrain driveTrain = DriveTrain.getInstance();
 	
-	public Autonomous () {
+	private Autonomous () {
 		
 	}
 	

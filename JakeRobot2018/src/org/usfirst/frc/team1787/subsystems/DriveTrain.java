@@ -29,7 +29,7 @@ public class DriveTrain {
 	
 	private static final DriveTrain instance = new DriveTrain();
 
-	public DriveTrain() {
+	private DriveTrain() {
 		//Inverting all of the talons so that they all light up green when the robot goes forward 
 		frontLeftMotor.setInverted(true);
 		backLeftMotor.setInverted(true);

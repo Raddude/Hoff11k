@@ -36,10 +36,7 @@ public class Robot extends TimedRobot {
 	
 	//Input options
 	private int FLYWHEEL_ACTIVATE_BUTTON = 1; 
-	private int FEEDER_ACTIVATE_BUTTON = 1;
-	
-	private double SLEWING_RING_SPEED_COEFFICIENT = 2.0;	
-	
+	private int FEEDER_ACTIVATE_BUTTON = 1;	
 	
 	
 	@Override
@@ -65,7 +62,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		driveTrain.arcadeDrive(-rightStick.getY(), rightStick.getX());
-		slewingRing.turnTurret(SLEWING_RING_SPEED_COEFFICIENT*leftStick.getRawAxis(JOYSTICK_ROTATION_AXIS));
+		slewingRing.turnTurret(leftStick.getRawAxis(JOYSTICK_ROTATION_AXIS));
 		
 		if (leftStick.getRawButtonPressed(FLYWHEEL_ACTIVATE_BUTTON)) {
 			flywheel.runFlywheelPID(-leftStick.getRawAxis(JOYSTICK_SLIDER_AXIS));
