@@ -26,7 +26,6 @@ public class Climb {
 	
 	
 	/**
-	 * 
 	 * Takes 1 parameter - Can either be EXTEND or RETRACT
 	 */
 	public void movePiston(DoubleSolenoid.Value desiredState) {
