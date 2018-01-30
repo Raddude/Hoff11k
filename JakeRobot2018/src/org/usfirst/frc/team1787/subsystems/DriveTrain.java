@@ -1,50 +1,66 @@
 package org.usfirst.frc.team1787.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.hal.HAL;
-import edu.wpi.first.wpilibj.hal.FRCNetComm.tInstances;
-import edu.wpi.first.wpilibj.hal.FRCNetComm.tResourceType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+/* CLASS DEFINITION:
+ * The drive train encompasses the 4 CIM motors (2 on either side) that are connected to gearboxes, and the gearboxes themselves.
+ */
 
 public class DriveTrain {
-	//Important talon values with more intuitive names
-	private final int FRONT_RIGHT_TALON_ID = 8;
-	private final int REAR_RIGHT_TALON_ID = 9;
-	private final int FRONT_LEFT_TALON_ID = 6;
-	private final int REAR_LEFT_TALON_ID = 7;
-	private WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(FRONT_LEFT_TALON_ID);
-	private WPI_TalonSRX backLeftMotor = new WPI_TalonSRX(REAR_LEFT_TALON_ID);	
-	private WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(FRONT_RIGHT_TALON_ID);
-	private WPI_TalonSRX backRightMotor = new WPI_TalonSRX(REAR_RIGHT_TALON_ID);
 	
-	//Speed controller groups, because arcadeDrive can only take in halves of the robot at a time to make
-	//each side go in the same direction.
-	private SpeedControllerGroup leftMotors;
-	private SpeedControllerGroup rightMotors;
 	
-	private DifferentialDrive myDrive;
+	private final int LEFT_DRIVE_MASTER_TALON_ID = 0;
+	private final int LEFT_DRIVE_FOLLOWER_VICTOR_ID = 2;
+	private final int RIGHT_DRIVE_MASTER_TALON_ID = 1;
+	private final int RIGHT_DRIVE_FOLLOWER_VICTOR_ID = 3;
+
+	private WPI_TalonSRX leftMaster = new WPI_TalonSRX(LEFT_DRIVE_MASTER_TALON_ID);
+	private WPI_VictorSPX leftFollower = new WPI_VictorSPX(LEFT_DRIVE_FOLLOWER_VICTOR_ID);
+	private WPI_TalonSRX rightMaster = new WPI_TalonSRX(RIGHT_DRIVE_MASTER_TALON_ID);
+	private WPI_VictorSPX rightFollower = new WPI_VictorSPX(RIGHT_DRIVE_FOLLOWER_VICTOR_ID);
+	
 	
 	private static final DriveTrain instance = new DriveTrain();
-
+	
+	
 	private DriveTrain() {
+		
+		//Pairing each master Talon with it's follower Victor
+		leftFollower.follow(leftMaster);
+		rightFollower.follow(rightMaster);
+		
 		//Inverting all of the talons so that they all light up green when the robot goes forward 
-		frontLeftMotor.setInverted(true);
-		backLeftMotor.setInverted(true);
-		frontRightMotor.setInverted(false);
-		backRightMotor.setInverted(false);
+		leftMaster.setInverted(false);
+		leftFollower.setInverted(false);
+		rightMaster.setInverted(false);
+		rightFollower.setInverted(false);
+		
+		//Voltage Compensation for the talons
+		leftMaster.configVoltageCompSaturation(12, 10);
+		leftFollower.configVoltageCompSaturation(12, 10);
+		rightMaster.configVoltageCompSaturation(12, 10);
+		rightFollower.configVoltageCompSaturation(12, 10);
+		
+		leftMaster.enableVoltageCompensation(true);
+		leftFollower.enableVoltageCompensation(true);
+		rightMaster.enableVoltageCompensation(true);
+		rightFollower.enableVoltageCompensation(true);
 	}
+	
 	
 	public static DriveTrain getInstance() {
 	    return instance;
 	  }
 	
-	public void arcadeDrive(double motorSpeed) {
-		//A function for Autonomous to just give a motor speed and have the robot move
-		arcadeDrive(motorSpeed, 0);
+	
+	public void pushDataToShuffleboard() {
+		SmartDashboard.putNumber("Left Output: ", leftMaster.get());
+		SmartDashboard.putNumber("Right Output: ", rightMaster.get());
 	}
+	
 	
 	@SuppressWarnings("ParameterName")
 	public void arcadeDrive(double xSpeed, double zRotation) {
@@ -52,9 +68,11 @@ public class DriveTrain {
 	    double leftMotorOutput;
 	    double rightMotorOutput;
 
+	    
 	    double maxInput = Math.copySign(Math.max(Math.abs(xSpeed), Math.abs(zRotation)), xSpeed);
 	    
-	    //This gets the joystick being put to a side to work correctly
+	    
+	    //This gets the joystick being put to a side to work correctly by putting the two sides in opposite directions
 	    if (xSpeed <= 0.1 && xSpeed >= -0.1) {
 	    	if (zRotation >= 0) {
 	    		leftMotorOutput = maxInput;
@@ -66,6 +84,7 @@ public class DriveTrain {
 	    	}
 	    }
 	    
+	    
 	    if (xSpeed >= 0.0) {
 	      // First quadrant, else second quadrant
 	      if (zRotation >= 0.0) {
@@ -75,7 +94,9 @@ public class DriveTrain {
 	        leftMotorOutput = xSpeed + zRotation;
 	        rightMotorOutput = maxInput;
 	      }
-	    } else {
+	    } 
+	    
+	    else {
 	      // Third quadrant, else fourth quadrant
 	      if (zRotation >= 0.0) {
 	        leftMotorOutput = maxInput;
@@ -86,13 +107,12 @@ public class DriveTrain {
 	      }
 	    }
 	    
-	    frontLeftMotor.set(leftMotorOutput);
-	    backLeftMotor.set(leftMotorOutput);
+	    
+	    
+	    leftMaster.set(leftMotorOutput);
+	    rightMaster.set(rightMotorOutput);
+	    
 	    System.out.println("Left: " + leftMotorOutput);
-	    frontRightMotor.set(rightMotorOutput);
-	    backRightMotor.set(rightMotorOutput);
 	    System.out.println("Right: " + rightMotorOutput);
 	  }
-	  
-
 }
