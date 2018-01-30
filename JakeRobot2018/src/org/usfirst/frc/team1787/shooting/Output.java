@@ -17,16 +17,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Output {
 	
-	private final int LEFT_SHOOT_MASTER_TALON_ID = 6;
-	private final int RIGHT_SHOOT_MASTER_TALON_ID = 7;
-	private final int LEFT_SHOOT_FOLLOWER_VICTOR_ID = 8;
-	private final int RIGHT_SHOOT_FOLLOWER_VICTOR_ID = 9;
+	private final int TOP_SHOOT_MASTER_TALON_ID = 6;
+	private final int BOTTOM_SHOOT_MASTER_TALON_ID = 7;
+	private final int TOP_SHOOT_FOLLOWER_VICTOR_ID = 8;
+	private final int BOTTOM_SHOOT_FOLLOWER_VICTOR_ID = 9;
 	private final int OUTPUT_SOLENOID_ID = 3;
 	
-	private WPI_TalonSRX leftMaster = new WPI_TalonSRX(LEFT_SHOOT_MASTER_TALON_ID);
-	private WPI_VictorSPX leftFollower = new WPI_VictorSPX(LEFT_SHOOT_FOLLOWER_VICTOR_ID);
-	private WPI_TalonSRX rightMaster = new WPI_TalonSRX(RIGHT_SHOOT_MASTER_TALON_ID);
-	private WPI_VictorSPX rightFollower = new WPI_VictorSPX(RIGHT_SHOOT_FOLLOWER_VICTOR_ID);
+	private WPI_TalonSRX topMaster = new WPI_TalonSRX(TOP_SHOOT_MASTER_TALON_ID);
+	private WPI_VictorSPX topFollower = new WPI_VictorSPX(TOP_SHOOT_FOLLOWER_VICTOR_ID);
+	private WPI_TalonSRX bottomMaster = new WPI_TalonSRX(BOTTOM_SHOOT_MASTER_TALON_ID);
+	private WPI_VictorSPX bottomFollower = new WPI_VictorSPX(BOTTOM_SHOOT_FOLLOWER_VICTOR_ID);
 	
 		
 	
@@ -38,37 +38,37 @@ public class Output {
 	
 	
 	private Output() {
-		leftFollower.follow(leftMaster);
-		rightFollower.follow(rightMaster);
+		topFollower.follow(topMaster);
+		bottomFollower.follow(bottomMaster);
 				
 		//Making every talon light up green when forwards
-		leftMaster.setInverted(false);
-		leftFollower.setInverted(false);
-		rightMaster.setInverted(false);
-		rightFollower.setInverted(false);
+		topMaster.setInverted(false);
+		topFollower.setInverted(false);
+		bottomMaster.setInverted(false);
+		bottomFollower.setInverted(false);
 		
 		//Voltage Compensation for the talons
-		leftMaster.configVoltageCompSaturation(12, 10);
-		leftFollower.configVoltageCompSaturation(12, 10);
-		rightMaster.configVoltageCompSaturation(12, 10);
-		rightFollower.configVoltageCompSaturation(12, 10);
+		topMaster.configVoltageCompSaturation(12, 10);
+		topFollower.configVoltageCompSaturation(12, 10);
+		bottomMaster.configVoltageCompSaturation(12, 10);
+		bottomFollower.configVoltageCompSaturation(12, 10);
 		
-		leftMaster.enableVoltageCompensation(true);
-		leftFollower.enableVoltageCompensation(true);
-		rightMaster.enableVoltageCompensation(true);
-		rightFollower.enableVoltageCompensation(true);
+		topMaster.enableVoltageCompensation(true);
+		topFollower.enableVoltageCompensation(true);
+		bottomMaster.enableVoltageCompensation(true);
+		bottomFollower.enableVoltageCompensation(true);
 	}
 	
 
 	
 	public void turnOnWheels(double SHOOTER_VOLTAGE) {
-		leftMaster.set(SHOOTER_VOLTAGE);
-		rightMaster.set(SHOOTER_VOLTAGE);
+		topMaster.set(SHOOTER_VOLTAGE);
+		bottomMaster.set(SHOOTER_VOLTAGE);
 	}
 	
 	public void turnOffWheels() {
-		leftMaster.stopMotor();
-		rightMaster.stopMotor();
+		topMaster.stopMotor();
+		bottomMaster.stopMotor();
 	}
 	
 	
@@ -84,8 +84,8 @@ public class Output {
 	
 	
 	public void pushDataToShuffleboard() {
-		SmartDashboard.putNumber("Left Shooter Speed: ", leftMaster.get());
-		SmartDashboard.putNumber("Right Shooter Speed: ", rightMaster.get());
+		SmartDashboard.putNumber("Top Shooter Speed: ", topMaster.get());
+		SmartDashboard.putNumber("Bottom Shooter Speed: ", bottomMaster.get());
 	}
 	
 	public static Output getInstance() {
