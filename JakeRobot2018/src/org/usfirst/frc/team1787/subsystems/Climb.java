@@ -25,11 +25,13 @@ public class Climb {
 	}
 	
 	
-	/**
-	 * Takes 1 parameter - Can either be EXTEND or RETRACT
-	 */
-	public void movePiston(DoubleSolenoid.Value desiredState) {
-		climbingSolenoid.set(desiredState);
+	public void extendPiston() {
+		climbingSolenoid.set(EXTEND);
+	}
+	
+	
+	public void retractPiston() {
+		climbingSolenoid.set(RETRACT);
 	}
 	
 	

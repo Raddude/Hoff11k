@@ -55,11 +55,11 @@ public class Shooter {
 	
 	private static final Shooter instance = new Shooter();
 	
-	private void shootThoseDankCubes() {
+	public void shootThoseDankCubes() {
 		
 		if (SHOOTER_TIMER > SHOOTING_STAGE_1_START_TIME && SHOOTER_TIMER < SHOOTING_STAGE_1_END_TIME) {
 			//Start shooting motors (Stage 1 and 2 motors) and briefly turn on intake
-			output.turnOnWheels(SHOOTING_VOLTAGE);
+			output.turnOnWheels(SHOOTING_VOLTAGE); //hello my name is nora and I like programming I learned how to type by playing minecraft
 			intake.turnOnWheels(INTAKE_VOLTAGE);
 		}
 		else if (SHOOTER_TIMER > SHOOTING_STAGE_2_START_TIME && SHOOTER_TIMER < SHOOTING_STAGE_2_END_TIME) {
@@ -83,7 +83,7 @@ public class Shooter {
 		SHOOTER_TIMER = SHOOTER_TIMER + 0.02;
 	}
 	
-	private void resetForThoseDankCubes() {
+	public void resetForThoseDankCubes() {
 		//Reset everything to default positions upon button release
 		SHOOTER_TIMER = 0;
 	}

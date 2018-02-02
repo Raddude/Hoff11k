@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1787.robot;
 
+import org.usfirst.frc.team1787.shooting.Shooter;
+
 /* CLASS DEFINITION:
  * This class is the main class for the robot, which ties all parts together and is automatically called upon by the RoboRIO
  */
@@ -21,6 +23,7 @@ public class Robot extends TimedRobot {
 	
 	private DriveTrain driveTrain = DriveTrain.getInstance();
 	private Climb climb = Climb.getInstance();
+	private Shooter shooter = Shooter.getInstance();
 	
 	private final int RIGHT_JOYSTICK_ID = 0;
 	private final int LEFT_JOYSTICK_ID = 1;
@@ -30,7 +33,9 @@ public class Robot extends TimedRobot {
 	private int JOYSTICK_SLIDER_AXIS = 3;
 	
 	//Input options
-	private int SHOOT_CUBES_BUTTON;
+	private int SHOOT_CUBES_BUTTON = 1;
+	private int CLIMB_EXTEND_BUTTON = 10;
+	private int CLIMB_RETRACT_BUTTON = 5;
 	
 	//Timer runs some of the below methods every 20ms
 
@@ -53,6 +58,19 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		driveTrain.arcadeDrive(-rightStick.getY(), rightStick.getX());
 		
+		if (leftStick.getRawButtonPressed(SHOOT_CUBES_BUTTON)) {
+			shooter.shootThoseDankCubes();
+		}
+		else if (leftStick.getRawButtonReleased(SHOOT_CUBES_BUTTON)) {
+			shooter.resetForThoseDankCubes();
+		}
+		
+		if (leftStick.getRawButtonPressed(CLIMB_EXTEND_BUTTON)) {
+			climb.extendPiston();
+		}
+		else if (leftStick.getRawButtonReleased(CLIMB_RETRACT_BUTTON)) {
+			climb.retractPiston();
+		}
 		
 		
 		
