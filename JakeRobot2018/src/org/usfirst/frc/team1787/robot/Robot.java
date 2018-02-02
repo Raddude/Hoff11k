@@ -58,12 +58,15 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		driveTrain.arcadeDrive(-rightStick.getY(), rightStick.getX());
 		
+		
 		if (leftStick.getRawButtonPressed(SHOOT_CUBES_BUTTON)) {
 			shooter.shootThoseDankCubes();
 		}
 		else if (leftStick.getRawButtonReleased(SHOOT_CUBES_BUTTON)) {
 			shooter.resetForThoseDankCubes();
 		}
+		
+		
 		
 		if (leftStick.getRawButtonPressed(CLIMB_EXTEND_BUTTON)) {
 			climb.extendPiston();
