@@ -71,7 +71,7 @@ public class Robot extends TimedRobot {
 		if (leftStick.getRawButtonPressed(CLIMB_EXTEND_BUTTON)) {
 			climb.extendPiston();
 		}
-		else if (leftStick.getRawButtonReleased(CLIMB_RETRACT_BUTTON)) {
+		else if (leftStick.getRawButtonPressed(CLIMB_RETRACT_BUTTON)) {
 			climb.retractPiston();
 		}
 		
