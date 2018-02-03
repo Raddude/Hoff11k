@@ -53,6 +53,11 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 
 	}
+	
+	@Override
+	public void teleopInit() {
+		
+	}
 
 	@Override
 	public void teleopPeriodic() {
@@ -79,6 +84,11 @@ public class Robot extends TimedRobot {
 		
 		driveTrain.pushDataToShuffleboard();
 		climb.pushDataToShuffleboard();
+	}
+	
+	@Override
+	public void testInit() {
+		
 	}
 
 	@Override

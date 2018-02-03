@@ -24,7 +24,7 @@ public class DriveTrain {
 	private WPI_VictorSPX rightFollower = new WPI_VictorSPX(RIGHT_DRIVE_FOLLOWER_VICTOR_ID);
 	
 	private final int GEAR_BOX_SOLENOID_ID = 5;
-	private Solenoid gearBoxSolenoid = new Solenoid(GEAR_BOX_SOLENOID_ID);
+	private Solenoid gearboxSolenoid = new Solenoid(GEAR_BOX_SOLENOID_ID);
 	
 	
 	
@@ -120,14 +120,17 @@ public class DriveTrain {
 	    System.out.println("Left: " + leftMotorOutput);
 	    System.out.println("Right: " + rightMotorOutput);
 	  }
+	
+	
 	public void highGear() 
 	{
-		gearBoxSolenoid.set(true);
+		gearboxSolenoid.set(true);
 	}
+	
 	
 	public void lowGear()
 	{
-		gearBoxSolenoid.set(false);
+		gearboxSolenoid.set(false);
 	}
 }
 
